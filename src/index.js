@@ -38,7 +38,7 @@ root.render(
           path="/login"
           element={
             <ProtectedLogin>
-              <GoogleOAuthProvider clientId="742437519815-g3sbs6ll3g51t6r2vk159n6scu018lrv.apps.googleusercontent.com">
+              <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_ID}>
                 <Login />
               </GoogleOAuthProvider>
             </ProtectedLogin>

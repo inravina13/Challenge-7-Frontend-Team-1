@@ -3,21 +3,27 @@ import Swal from "sweetalert2";
 
 export const login = (data) => async (dispatch) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_LOGIN}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND}/api/v1/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const result = await response.json();
 
-    const response_user = await fetch(process.env.REACT_APP_WHOAMI, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${result.token}`,
-      },
-    });
+    const response_user = await fetch(
+      `${process.env.REACT_APP_BACKEND}/api/v1/whoami`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${result.token}`,
+        },
+      }
+    );
     const user = await response_user.json();
 
     if (result.token) {
@@ -52,12 +58,15 @@ export const login = (data) => async (dispatch) => {
 };
 export const whoami = (data) => async (dispatch) => {
   try {
-    const response_user = await fetch(process.env.REACT_APP_WHOAMI, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-      },
-    });
+    const response_user = await fetch(
+      `${process.env.REACT_APP_BACKEND}/api/v1/whoami`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      }
+    );
     const user = await response_user.json();
 
     if (user.token) {
@@ -107,13 +116,16 @@ export const loginWithGoogle = (accessToken) => async (dispatch) => {
     const data = {
       access_token: accessToken,
     };
-    const response = await fetch(process.env.REACT_APP_GOOGLE, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND}/api/v1/auth/google`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const result = await response.json();
 
@@ -121,6 +133,7 @@ export const loginWithGoogle = (accessToken) => async (dispatch) => {
       await dispatch({
         type: LOGIN,
         payload: result.token,
+        user: result.user,
       });
       await Swal.fire({
         title: "Success",
@@ -147,13 +160,16 @@ export const loginWithGoogle = (accessToken) => async (dispatch) => {
 
 export const register = (data) => async (dispatch) => {
   try {
-    const response = await fetch(process.env.REACT_APP_REGISTER, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND}/api/v1/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const result = await response.json();
     dispatch({
       type: REGISTER,

@@ -7,7 +7,8 @@ export const getFilteredCars = (data_cars) => async (dispatch) => {
     }
     console.log(data_cars.passenger);
     const response = await fetch(
-      process.env.REACT_APP_FILTERED_CARS +
+      process.env.REACT_APP_BACKEND +
+        "/api/v1/cars" +
         "?" +
         new URLSearchParams({
           date: data_cars.date,

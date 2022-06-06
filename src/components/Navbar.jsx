@@ -91,7 +91,7 @@ function NavBar(props) {
               <Nav.Link href="/#faq" onClick={linkFaq} className="mx-3">
                 FAQ
               </Nav.Link>
-              {!user ? (
+              {!window.localStorage.getItem("token") ? (
                 <Button
                   variant="success"
                   className="mx-3"
